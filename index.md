@@ -1,8 +1,9 @@
 ---
-layout: home
+layout: page
+title: Topics
 ---
 
-## Explore Topics
+<p> Welcome to my blogs! Here are different topics I write about:</p>
 <ul>
   {% for category in site.categories %}
     <li>
