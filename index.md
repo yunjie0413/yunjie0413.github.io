@@ -1,6 +1,16 @@
 ---
 layout: home
 ---
-## Categories
-- [Algorithms](/category/Algorithms)
-- [Math](/category/Math)
+
+## Explore Topics
+<ul>
+  {% for category in site.categories %}
+    <li>
+      <a href="{{ site.baseurl }}/categories/#{{ category[0] | slugify }}">
+        {{ category[0] }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
+---
