@@ -1,4 +1,6 @@
 ---
 layout: home
 ---
-Welcome
+## Categories
+- [Algorithms](/category/Algorithms)
+- [Math](/category/Math)
