@@ -3,15 +3,16 @@ layout: page
 title: Topics
 ---
 
-<p> Welcome to my blogs! Here are different topics I write about:</p>
+Welcome to my blog! Here are the different topics I write about:
+
 <ul>
-  {% for category in site.categories %}
-    <li>
-      <a href="{{ site.baseurl }}/categories/#{{ category[0] | slugify }}">
-        {{ category[0] }}
-      </a>
-    </li>
+  {% for p in site.pages %}
+    {% if p.layout == 'category' %}
+      <li>
+        <a href="{{ site.baseurl }}{{ p.url }}">
+          {{ p.title }}
+        </a>
+      </li>
+    {% endif %}
   {% endfor %}
 </ul>
-
----
