@@ -1,0 +1,42 @@
+---
+layout: post
+title: Tseytin Transformation satisfiability-preserving CNF Conversion Proof
+date: 2026-01-10
+categories: Propositional Proof Complexity
+---
+
+## Tseytin Transformation
+1. Create parse tree from the formula.
+2. Create a new variable for each internal node including the root.
+3. For each internal node, create CNF clauses that relate the new variable to its children based on the operator.
+    - $A \land B$: $(x_i \leftrightarrow (x_j \land x_k))$ $\equiv (x_i \rightarrow (x_j \land x_k)) \land ((x_j \land x_k) \rightarrow x_i)$
+         - CNF: $(\neg x_i \lor x_j) \land (\neg x_i \lor x_k) \land (x_i \lor \neg x_j \lor \neg x_k)$
+    - $A \lor B$: $(x_i \leftrightarrow (x_j \lor x_k))$
+         - CNF: $(x_i \lor \neg x_j) \land (x_i \lor \neg x_k) \land (\neg x_i \lor x_j \lor x_k)$
+    - $A \rightarrow B$: $(x_i \leftrightarrow (\neg x_j \lor x_k))$
+         - CNF: $(\neg x_i \lor \neg x_j \lor x_k) \land (x_i \lor x_j) \land (x_i \lor \neg x_k)$ 
+    - $\neg A$: $(x_i \leftrightarrow \neg x_j)$
+         - CNF: $(\neg x_i \lor \neg x_j) \land (x_i \lor x_j)$
+
+It's obvious that $|T(F)|$ is linear in $|F|$.
+
+Proof of Equi-satisfiability:
+
+1. Suppose $\alpha'$ is a satisfying assignment for $T(F)$. 
+    Claim: By restricting $\alpha'$ to the original variables of $F$, we obtain a satisfying assignment for $F$. 
+    Proof by showing that each variable introduced has the same truth value as the subformula it corresponds to in the parse tree of $F$.
+
+    Induction on height of the parse tree:
+    - Base Case: Propositional variables combined with a single operator. The clauses ensure that the new variable has the same truth value as the subformula it represents. (E.g., $x_i \leftrightarrow (P \land Q)$)
+    - Inductive Step: 
+      Since $\alpha'$ satisfies the clauses about equivalence, the truth value of each new variable matches the truth value of combining its children according to the operator. By IH, the children have same truth values as their corresponding subformulas and in the clauses, the operator is the same as the operator of the subformula. Thus, the new variable has the same truth value as the subformula it represents.
+      Then, the root variable has the same truth value as $F$.
+      Since $\alpha'$ satisfies $T(F)$, the root variable is true, so $F$ is true under the restricted assignment.
+    
+2.  Suppose $\alpha$ is a satisfying assignment for $F$.
+    Claim: We can extend $\alpha$ to a satisfying assignment $\alpha'$ for $T(F)$ by assigning each new variable the same truth value as the subformula it corresponds to in the parse tree of $F$.
+    Proof all clauses are satisfied by induction on the height of the new variable's corresponding subformula.
+    - Base Case: Propositional variables combined with a single operator. The new variable is assigned the same truth value as the subformula it represents, so the clauses are satisfied.
+    - Inductive Step:
+        By IH, clauses induced by the children are satisfied. Since the new variable is assigned the same truth value as the subformula it represents which is also the truth value obtained by its children combined according to the operator, the clauses induced by this new variable are also satisfied.  (E.g., $x_i \leftrightarrow (x_j \land x_k)$)
+    - Finally, the root variable is true since $F$ is true under $\alpha$, so all clauses in $T(F)$ are satisfied by $\alpha'$.
