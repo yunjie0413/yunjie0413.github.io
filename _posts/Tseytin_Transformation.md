@@ -2,7 +2,7 @@
 layout: post
 title: Tseytin Transformation satisfiability-preserving CNF Conversion Proof
 date: 2026-01-10
-categories: Propositional Proof Complexity
+categories: propositional-proof-complexity
 ---
 
 ## Tseytin Transformation
